@@ -28,10 +28,18 @@ kotlin {
 }
 
 dependencies {
+
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.moshi.core)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
     testImplementation(libs.kotlin.test)
     testImplementation(libs.junit.aggregator)
     testRuntimeOnly(libs.junit.engine)
     testRuntimeOnly(libs.junit.platform)
+
 }
 
 
