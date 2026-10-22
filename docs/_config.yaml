@@ -1,0 +1,21 @@
+remote_theme: dd-java-kotlin/ddc-day-book
+repository_link:
+  enabled: false
+page_navigator:
+  enabled: true
+titles_from_headings:
+  enabled: false
+prev_next_navigation:
+- bottom
+
+# TODO Modify the contents below for the specific project. NOTE THE INDENTATION!
+
+title: "Personal Android Project"
+description: "Trust me, it'll be cool!"
+version: "1.0.0"
+author:
+  name: "DDC Student"
+  email: "myemail@student.cnm.edu"
+
+# Do not change the following line.
+  copyright: true
