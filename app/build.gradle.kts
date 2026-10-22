@@ -209,7 +209,7 @@ dependencies {
 
 roomDdl {
     // TODO Change source location to match local database.
-    source.set(project.file("$projectDir/schemas/edu.cnm.deepdive.myproject.service.LocalDatabase/1.json"))
+    source.set(project.file("$projectDir/schemas/edu.cnm.deepdive.skywatch.service.LocalDatabase/1.json"))
     destination.set(project.file("$projectDir/../docs/sql/ddl.sql"))
 }
 

@@ -13,23 +13,14 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package edu.cnm.deepdive.myproject.javafx;
+package edu.cnm.deepdive.skywatch.javafx;
 
 import javafx.application.Application;
-import javafx.stage.Stage;
 
-/**
- * Initializes (in the {@link #start(Stage)} method) application-level resources, and sets the
- * contents of the primary stage. This class <strong>must</strong> be referenced in
- * {@link Main#main(String[])} for the application to start successfully.
- */
-public class MyProjectApplication extends Application { // TODO Rename this class as appropriate.
+class Main {
 
-  @Override
-  public void start(Stage stage) throws Exception {
-    // TODO Set window title as appropriate.
-    // TODO Load or create Parent node to create a scene and set it on the stage.
-    stage.show();
+  static void main(String[] args) {
+    Application.launch(SkyWatchApplication.class, args);
   }
 
 }
