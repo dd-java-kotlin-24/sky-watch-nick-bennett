@@ -1,15 +1,11 @@
-# JavaFX + Android Project Template
-
-[//]: # (TODO Update title.  )
+# Sky Watch
 
 ## Summary
 
-[//]: # (TODO Provide project summary.)
+This project is for the implementation of JavaFX and Android front-ends to the NASA Media API.
 
 ## Credits, copyrights, and license information
 
-[//]: # (TODO Include author)
-
-&copy; 2026 by (_author_).
+&copy; 2026 by the members and instructors of cohort 24 of the Deep Dive Java & Kotlin bootcamp.
 
 [//]: # (TODO Add license info)
