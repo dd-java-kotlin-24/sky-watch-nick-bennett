@@ -1,6 +1,6 @@
 package edu.cnm.deepdive.skywatch.core.service
 
-import edu.cnm.deepdive.skywatch.core.model.dto.SearchItem
+import edu.cnm.deepdive.skywatch.core.model.domain.SearchResultImage
 import java.time.OffsetDateTime
 
 interface MediaRepository {
@@ -16,6 +16,6 @@ interface MediaRepository {
         searchFilter: String? = null,
         startDate: OffsetDateTime? = null,
         endDate: OffsetDateTime? = null,
-    ): Array<SearchItem>
+    ): List<SearchResultImage>
 
 }
