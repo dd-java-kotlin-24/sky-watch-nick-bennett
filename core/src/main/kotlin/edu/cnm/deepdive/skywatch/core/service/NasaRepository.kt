@@ -1,9 +1,11 @@
 package edu.cnm.deepdive.skywatch.core.service
 
+import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.ToJson
 import com.squareup.moshi.addAdapter
 import edu.cnm.deepdive.skywatch.core.model.domain.SearchResultImage
 import edu.cnm.deepdive.skywatch.core.model.dto.nasa.SearchItem
@@ -14,6 +16,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.InputStreamReader
+import java.net.URI
+import java.net.URL
 import java.time.OffsetDateTime
 import java.util.*
 
@@ -36,7 +40,8 @@ internal object NasaRepository : MediaRepository {
         val baseUrl = properties["base_url"] as String
         val loggingLevel = properties["logging_level"] as String
         val moshi = Moshi.Builder()
-            .add(OffsetDateTime::class.java, OffsetDateTimeAdapter())
+            .add(OffsetDateTimeAdapter())
+            .add(UrlAdapter())
             .build()
         val interceptor = HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.valueOf(loggingLevel.uppercase()))
@@ -94,13 +99,25 @@ internal object NasaRepository : MediaRepository {
 
 }
 
-private class OffsetDateTimeAdapter : JsonAdapter<OffsetDateTime>() {
+private class OffsetDateTimeAdapter {
 
-    override fun fromJson(reader: JsonReader): OffsetDateTime? =
-        OffsetDateTime.parse(reader.nextString())
+    @FromJson
+    fun fromJson(value: String): OffsetDateTime? =
+        OffsetDateTime.parse(value)
 
-    override fun toJson(writer: JsonWriter, value: OffsetDateTime?) {
-        writer.value(value.toString())
-    }
+    @ToJson
+    fun toJson(value: OffsetDateTime?) =
+        value?.toString()
+}
+
+private class UrlAdapter {
+
+    @FromJson
+    fun fromJson(value: String): URL? =
+        URI(value).toURL()
+
+    @ToJson
+    fun toJson(value: URL?): String? =
+        value?.toString()
 
 }
