@@ -1,12 +1,9 @@
-package edu.cnm.deepdive.skywatch.core.service
+package edu.cnm.deepdive.skywatch.core.repository
 
 import com.squareup.moshi.FromJson
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.JsonReader
-import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
-import com.squareup.moshi.addAdapter
+import edu.cnm.deepdive.skywatch.core.api.NasaMediaApi
 import edu.cnm.deepdive.skywatch.core.model.domain.SearchResultImage
 import edu.cnm.deepdive.skywatch.core.model.dto.nasa.SearchItem
 import edu.cnm.deepdive.skywatch.core.model.dto.nasa.SearchResult
@@ -57,17 +54,31 @@ internal object NasaRepository : MediaRepository {
     }
 
     /**
-     * TODO Add contract description.
+     * Submits a search request to the NASA media API, returning the results as a
+     * [List][List<SearchResultImage>]. The order of the results returned by this function is that
+     * dictated by the NASA API; higher-level ordering requirements should be addressed by consumers
+     * (direct or indirect) of the results returned by this function.
      *
-     * @param searchFilter
-     * @param startDate
-     * @param endDate
+     * The NASA media search API supports specification of dates at the year level only; thus, only
+     * the year portions of [startDate] and [endDate] (if provided) are used.
+     *
+     * At least one of the filter parameter values ([searchFilter],
+     * [startDate], [endDate]) must be provided, or [IllegalArgumentException] will be thrown.
+     *
+     * @param searchFilter optional search string.
+     * @param startDate start of optional date range filter, expressed as an ISO 8601 offset date-time
+     * (`YYYY-MM-DDTHH:mm[:ss[.SSS]±HH[:]mm`).
+     * @param endDate end of optional date range filter, expressed as an ISO 8601 offset date-time
+     * (`YYYY-MM-DDTHH:mm[:ss[.SSS]±HH[:]mm`).
+     * @throws IllegalArgumentException If at least one of [searchFilter], [startDate], and
+     * [endDate] is not `null`.
      */
     override fun search(
         searchFilter: String?,
         startDate: OffsetDateTime?,
         endDate: OffsetDateTime?,
     ): List<SearchResultImage> {
+        require(searchFilter != null || startDate != null || endDate != null)
         val response: Response<SearchResult> =
             api.search(query = searchFilter, startYear = startDate?.year, endYear = endDate?.year)
                 .execute()

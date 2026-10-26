@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.skywatch.core.service
+package edu.cnm.deepdive.skywatch.core.api
 
 import edu.cnm.deepdive.skywatch.core.model.dto.nasa.SearchResult
 import retrofit2.Call
