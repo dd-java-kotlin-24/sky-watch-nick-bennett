@@ -17,7 +17,9 @@ MediaRepository {
      * (direct or indirect) of the results returned by this function.
      *
      * At least one of the filter parameter values ([searchFilter],
-     * [startDate], [endDate]) must be provided, or [IllegalArgumentException] will be thrown.
+     * [startDate], [endDate]) must be provided, or [IllegalArgumentException] will be thrown. The
+     * same exception will be thrown if non-`null` values are provided for both [startDate] and
+     * [endDate], but (`startDate > endDate`).
      *
      * @param searchFilter optional search string.
      * @param startDate start of optional date range filter, expressed as an ISO 8601 offset date-time
