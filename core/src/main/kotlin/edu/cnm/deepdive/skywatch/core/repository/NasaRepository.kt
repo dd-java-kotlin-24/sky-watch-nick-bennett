@@ -22,6 +22,9 @@ private const val LOCAL_PROPERTIES = "local.properties"
 private const val CANONICAL_IDENTIFIER = "canonical"
 private const val THUMBNAIL_IDENTIFIER = "preview"
 
+/**
+ * Implements [MediaRepository] for the NASA media API.
+ */
 internal object NasaRepository : MediaRepository {
 
     private val api: NasaMediaApi
@@ -108,27 +111,27 @@ internal object NasaRepository : MediaRepository {
         return SearchResultImage(description, keywords, canonical.url, thumbnail.url)
     }
 
-}
+    private class OffsetDateTimeAdapter {
 
-private class OffsetDateTimeAdapter {
+        @FromJson
+        fun fromJson(value: String): OffsetDateTime? =
+            OffsetDateTime.parse(value)
 
-    @FromJson
-    fun fromJson(value: String): OffsetDateTime? =
-        OffsetDateTime.parse(value)
+        @ToJson
+        fun toJson(value: OffsetDateTime?) =
+            value?.toString()
+    }
 
-    @ToJson
-    fun toJson(value: OffsetDateTime?) =
-        value?.toString()
-}
+    private class UrlAdapter {
 
-private class UrlAdapter {
+        @FromJson
+        fun fromJson(value: String): URL? =
+            URI(value).toURL()
 
-    @FromJson
-    fun fromJson(value: String): URL? =
-        URI(value).toURL()
+        @ToJson
+        fun toJson(value: URL?): String? =
+            value?.toString()
 
-    @ToJson
-    fun toJson(value: URL?): String? =
-        value?.toString()
+    }
 
 }

@@ -3,6 +3,10 @@ package edu.cnm.deepdive.skywatch.core.repository
 import edu.cnm.deepdive.skywatch.core.model.domain.SearchResultImage
 import java.time.OffsetDateTime
 
+/**
+ * Declares functionality of a searchable media repository. Currently, images are the only
+ * supported media, and only read operations are declared.
+ */
 interface
 MediaRepository {
 
