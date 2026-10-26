@@ -1,6 +1,6 @@
 package edu.cnm.deepdive.skywatch.core.api
 
-import edu.cnm.deepdive.skywatch.core.model.dto.SearchResult
+import edu.cnm.deepdive.skywatch.core.model.dto.nasa.SearchResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

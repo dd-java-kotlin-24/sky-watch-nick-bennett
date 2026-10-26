@@ -5,17 +5,25 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
 import edu.cnm.deepdive.skywatch.core.api.NasaMediaApi
 import edu.cnm.deepdive.skywatch.core.model.SearchResultImage
+import edu.cnm.deepdive.skywatch.core.model.dto.nasa.SearchItem
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.UncheckedIOException
 import java.net.URI
 import java.net.URL
 import java.time.OffsetDateTime
 import java.util.*
 
+
 internal object NasaRepository : MediaRepository {
 
     private const val SERVICE_PROPERTIES = "nasa-media-search.properties"
     private const val BASE_URL_KEY = "base_url"
     private const val LOGGING_LEVEL_KEY = "logging_level"
+    private const val CANONICAL_ROLE = "canonical"
+    private const val THUMBNAIL_ROLE = "preview"
 
     private val api: NasaMediaApi
 
@@ -37,7 +45,20 @@ internal object NasaRepository : MediaRepository {
             .add(UrlAdapter())
             .build()
 
-        TODO("Initialize api using Moshi, OkHttp, and Retrofit")
+        val interceptor = HttpLoggingInterceptor()
+            .setLevel(HttpLoggingInterceptor.Level.valueOf(loggingLevel.uppercase()))
+
+        val client = OkHttpClient.Builder()
+            .addNetworkInterceptor(interceptor)
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(client)
+            .build()
+
+        api = retrofit.create(NasaMediaApi::class.java)
     }
 
     /**
@@ -47,10 +68,10 @@ internal object NasaRepository : MediaRepository {
      * search parameters that can be used to change this order; thus, the order of returned results
      * is not defined.
      *
-     * At least one of the filter parameter values ([searchFilter],
-     * [startDate], [endDate]) must be provided, or [IllegalArgumentException] will be thrown.
-     * If a non-`null` value is not provided for either [startDate] or [endDate], and [searchFilter]
-     * is non-`null` but [searchFilter] is blank, [IllegalArgumentException] is thrown.
+     * At least one of the filter parameter values ([searchFilter], [startDate], [endDate]) must be
+     * non-`null`, or [IllegalArgumentException] will be thrown.
+     * If non-`null` values are not provided for [startDate] and [endDate], and [searchFilter]
+     * is non-`null` but blank, [IllegalArgumentException] is thrown.
      * [IllegalArgumentException] is also thrown when non-`null` values are provided for both
      * [startDate] and [endDate], but `startDate > endDate`.
      *
@@ -81,7 +102,7 @@ internal object NasaRepository : MediaRepository {
      * - non-`null` values are provided for both [startDate] and [endDate], but
      * `startDate > endDate` (using [OffsetDateTime.compareTo]).
      *
-     * @throws UncheckedIOException (with specific type specified by implementation) for any other
+     * @throws RuntimeException (with specific type specified by implementation) for any other
      * network-access or service communication failure.
      */
     override fun search(
@@ -89,8 +110,41 @@ internal object NasaRepository : MediaRepository {
         startDate: OffsetDateTime?,
         endDate: OffsetDateTime?,
     ): List<SearchResultImage> {
-        TODO("Not yet implemented")
+        require(startDate != null || endDate != null || !searchFilter.isNullOrBlank())
+        require((startDate ?: OffsetDateTime.MIN) <= (endDate ?: OffsetDateTime.MAX))
+        val response = api.search(
+            query = searchFilter,
+            startYear = startDate?.year,
+            endYear = endDate?.year
+        )
+            .execute()
+        return if (!response.isSuccessful) {
+            throw RuntimeException("Request was not processed successfully.")
+        } else if (response.body() == null) {
+            throw RuntimeException("Request did not result in a valid response.")
+        } else {
+            response.body()!!
+                .collection
+                .items
+                .map(::extractResult)
+        }
     }
+
+    private fun extractResult(item: SearchItem): SearchResultImage {
+        val itemData = item.data[0]
+        val links = item.links
+        val canonical = links.firstOrNull { it.role == CANONICAL_ROLE }
+            ?: links.maxBy { it.width ?: 0 }
+        val thumbnail = links.firstOrNull { it.role == THUMBNAIL_ROLE }
+            ?: links.minBy { it.width ?: Int.MAX_VALUE }
+        return SearchResultImage(
+            itemData.description,
+            itemData.keywords,
+            canonical.url,
+            thumbnail.url
+        )
+    }
+
 }
 
 private class OffsetDateTimeAdapter {
