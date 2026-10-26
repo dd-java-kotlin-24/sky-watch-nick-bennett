@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.skywatch.core.service
+package edu.cnm.deepdive.skywatch.core.repository
 
 import edu.cnm.deepdive.skywatch.core.model.SearchResultImage
 import java.time.OffsetDateTime

@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.skywatch.core.service
+package edu.cnm.deepdive.skywatch.core.repository
 
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.Moshi
@@ -10,7 +10,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.io.UncheckedIOException
 import java.net.URI
 import java.net.URL
 import java.time.OffsetDateTime
@@ -69,7 +68,7 @@ internal object NasaRepository : MediaRepository {
      * is not defined.
      *
      * At least one of the filter parameter values ([searchFilter], [startDate], [endDate]) must be
-     * non-`null`, or [IllegalArgumentException] will be thrown.
+     * non-`null`, or [IllegalArgumentException] is thrown.
      * If non-`null` values are not provided for [startDate] and [endDate], and [searchFilter]
      * is non-`null` but blank, [IllegalArgumentException] is thrown.
      * [IllegalArgumentException] is also thrown when non-`null` values are provided for both
