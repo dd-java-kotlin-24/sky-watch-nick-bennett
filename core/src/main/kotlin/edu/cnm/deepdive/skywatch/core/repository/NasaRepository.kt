@@ -73,8 +73,9 @@ internal object NasaRepository : MediaRepository {
      * (`YYYY-MM-DDTHH:mm[:ss[.SSS]±HH[:]mm`).
      * @param endDate end of optional date range filter, expressed as an ISO 8601 offset date-time
      * (`YYYY-MM-DDTHH:mm[:ss[.SSS]±HH[:]mm`).
-     * @throws IllegalArgumentException If at least one of [searchFilter], [startDate], and
-     * [endDate] is not `null`.
+     * @throws IllegalArgumentException If all of [searchFilter], [startDate], and [endDate] are
+     * `null`, or if non-`null` values are provided for both [startDate] and [endDate], but
+     * `startDate > endDate`.
      */
     override fun search(
         searchFilter: String?,
