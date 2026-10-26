@@ -1,21 +1,36 @@
 package edu.cnm.deepdive.skywatch.core.service
 
-import edu.cnm.deepdive.skywatch.core.model.dto.SearchItem
+import edu.cnm.deepdive.skywatch.core.model.SearchResultImage
 import java.time.OffsetDateTime
 
 interface MediaRepository {
 
     /**
-     * TODO Add contract description.
+     * Submits a search request to a media service, returning the results as a
+     * [List][List<SearchResultImage>]. The order of the results returned by this function is left
+     * to the implementation; higher-level ordering requirements should be addressed by consumers
+     * (direct or indirect) of this function.
      *
-     * @param searchFilter
-     * @param startDate
-     * @param endDate
+     * At least one of the filter parameter values ([searchFilter],
+     * [startDate], [endDate]) must be provided, or [IllegalArgumentException] will be thrown. The
+     * same exception will be thrown when non-`null` values are provided for both [startDate] and
+     * [endDate], but `startDate > endDate`.
+     *
+     * @param searchFilter optional search string.
+     * @param startDate start of optional date range filter, expressed as an ISO 8601 offset
+     * date-time (`YYYY-MM-DDTHH:mm[:ss[.SSS]±HH[:]mm`).
+     * @param endDate end of optional date range filter, expressed as an ISO 8601 offset date-time
+     * (`YYYY-MM-DDTHH:mm[:ss[.SSS]±HH[:]mm`).
+     * @return [List][List<SearchResultImage>] of search results.
+     *
+     * @throws IllegalArgumentException If all of [searchFilter], [startDate], and [endDate] are
+     * `null`, or if non-`null` values are provided for both [startDate] and [endDate], but
+     * `startDate > endDate`.
      */
     fun search(
         searchFilter: String? = null,
         startDate: OffsetDateTime? = null,
         endDate: OffsetDateTime? = null,
-    ): Array<SearchItem>
+    ): List<SearchResultImage>
 
 }
