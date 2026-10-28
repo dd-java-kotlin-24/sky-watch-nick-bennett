@@ -1,0 +1,6 @@
+### SkyWatch query
+GET https://images-api.nasa.gov/search?
+    q=challenger&
+    year_start=1996&
+    year_end=1996
+Accept: application/json
