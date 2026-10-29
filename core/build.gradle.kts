@@ -30,6 +30,9 @@ kotlin {
 
 dependencies {
 
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.coroutines.jdk8)
+
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.moshi.core)

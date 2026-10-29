@@ -32,4 +32,10 @@ public class SkyWatchApplication extends Application {
     stage.show();
   }
 
+  @Override
+  public void stop() throws Exception {
+    // TODO: 2026-10-28 Shut down the service.
+    super.stop();
+  }
+
 }
