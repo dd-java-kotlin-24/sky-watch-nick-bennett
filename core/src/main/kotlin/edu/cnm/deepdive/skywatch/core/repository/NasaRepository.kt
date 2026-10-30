@@ -104,7 +104,7 @@ internal object NasaRepository : MediaRepository {
      * @throws RuntimeException (with specific type specified by implementation) for any other
      * network-access or service communication failure.
      */
-    override fun search(
+    override suspend fun search(
         searchFilter: String?,
         startDate: OffsetDateTime?,
         endDate: OffsetDateTime?,

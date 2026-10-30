@@ -16,6 +16,8 @@
 package edu.cnm.deepdive.skywatch.javafx;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.stage.Stage;
 
 /**
@@ -25,10 +27,12 @@ import javafx.stage.Stage;
  */
 public class SkyWatchApplication extends Application {
 
+  private static final String MAIN_LAYOUT_FILE = "main.fxml";
+
   @Override
   public void start(Stage stage) throws Exception {
-    // TODO Set window title as appropriate.
-    // TODO Load or create Parent node to create a scene and set it on the stage.
+    FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(MAIN_LAYOUT_FILE));
+    Parent root = loader.load();
     stage.show();
   }
 
