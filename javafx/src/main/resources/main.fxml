@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.ListView?>
 
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
 <BorderPane
   xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
@@ -12,8 +14,17 @@
   stylesheets="@main.css">
 
   <top>
-    <HBox>
-      <!-- TODO Add search controls.-->
+    <HBox
+      id="searchControls">
+
+      <TextField
+        fx:id="searchFilter"/>
+
+      <Button
+        fx:id="search"
+        onAction="#search"
+        text="%search-label"/>
+
     </HBox>
   </top>
 
