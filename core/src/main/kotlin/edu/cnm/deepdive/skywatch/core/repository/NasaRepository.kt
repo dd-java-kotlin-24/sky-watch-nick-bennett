@@ -116,7 +116,6 @@ internal object NasaRepository : MediaRepository {
             startYear = startDate?.year,
             endYear = endDate?.year
         )
-            .execute()
         return if (!response.isSuccessful) {
             throw RuntimeException("Request was not processed successfully.")
         } else if (response.body() == null) {

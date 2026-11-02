@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
+    testImplementation(kotlin("reflect"))
     testImplementation(libs.kotlin.test)
     testImplementation(libs.junit.aggregator)
     testRuntimeOnly(libs.junit.engine)

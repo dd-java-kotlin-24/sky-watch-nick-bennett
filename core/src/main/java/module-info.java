@@ -16,6 +16,7 @@ module edu.cnm.deepdive.skywatch.core {
   exports edu.cnm.deepdive.skywatch.core.service;
 
   opens edu.cnm.deepdive.skywatch.core.model.dto.nasa to com.squareup.moshi;
+  opens edu.cnm.deepdive.skywatch.core.repository to com.squareup.moshi;
   opens edu.cnm.deepdive.skywatch.core.api to retrofit2;
   opens edu.cnm.deepdive.skywatch.core.service to dagger;
 
