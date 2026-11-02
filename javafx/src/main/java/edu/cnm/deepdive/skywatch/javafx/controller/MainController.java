@@ -29,8 +29,15 @@ public class MainController {
   }
 
   @FXML
+  private void initialize() {
+    viewModel.subscribeToResult((results) -> {
+      System.out.println(results);
+    });
+  }
+
+  @FXML
   private void search(ActionEvent actionEvent) {
-    // TODO: 2026-11-02 Invoke search method on viewmodel.
+    viewModel.search(searchFilter.getText(), null, null);
   }
 
 }
