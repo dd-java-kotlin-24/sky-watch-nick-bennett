@@ -2,6 +2,7 @@ package edu.cnm.deepdive.skywatch.javafx.viewmodel;
 
 import edu.cnm.deepdive.skywatch.core.model.SearchResultImage;
 import edu.cnm.deepdive.skywatch.core.service.MediaSearchService;
+import jakarta.inject.Inject;
 import java.time.OffsetDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class SearchViewModel {
   private final List<Consumer<List<SearchResultImage>>> searchResultSubscribers;
   private final List<Consumer<Throwable>> exceptionSubscribers;
 
+  @Inject
   public SearchViewModel(MediaSearchService service) {
     this.service = service;
     searchResultSubscribers = new LinkedList<>();

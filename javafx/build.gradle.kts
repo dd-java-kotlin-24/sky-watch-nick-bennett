@@ -20,6 +20,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.dokka)
     alias(libs.plugins.openjfx)
+    alias(libs.plugins.ksp)
     application
     jacoco
 }
@@ -56,6 +57,9 @@ dependencies {
     implementation(project(":core"))
 
     implementation(libs.jspecify)
+    implementation(libs.jakarta.inject)
+    ksp(libs.dagger.compiler)
+    implementation(libs.dagger.core)
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.junit.aggregator)

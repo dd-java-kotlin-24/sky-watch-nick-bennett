@@ -15,9 +15,13 @@
  */
 package edu.cnm.deepdive.skywatch.javafx;
 
+import edu.cnm.deepdive.skywatch.javafx.controller.MainController;
+import edu.cnm.deepdive.skywatch.javafx.di.DaggerJavaFxComponent;
+import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -28,11 +32,26 @@ import javafx.stage.Stage;
 public class SkyWatchApplication extends Application {
 
   private static final String MAIN_LAYOUT_FILE = "main.fxml";
+  private static final String BUNDLE_BASE_NAME = "ui-strings";
+  private static final String WINDOW_TITLE_KEY = "window-title";
 
   @Override
   public void start(Stage stage) throws Exception {
-    FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(MAIN_LAYOUT_FILE));
+    ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME);
+    FXMLLoader loader =
+        new FXMLLoader(getClass().getClassLoader().getResource(MAIN_LAYOUT_FILE), bundle);
+    loader.setControllerFactory((type) -> {
+      if (type == MainController.class) {
+        return DaggerJavaFxComponent.create().mainController();
+      } else {
+        throw new IllegalArgumentException("Unsupported controller class: %s".formatted(type));
+      }
+    });
     Parent root = loader.load();
+    Scene scene = new Scene(root);
+    stage.setResizable(false);
+    stage.setTitle(bundle.getString(WINDOW_TITLE_KEY));
+    stage.setScene(scene);
     stage.show();
   }
 
