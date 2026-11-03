@@ -61,6 +61,9 @@ dependencies {
     ksp(libs.dagger.compiler)
     implementation(libs.dagger.core)
 
+    implementation(libs.openjfx.controls)
+    implementation(libs.openjfx.fxml)
+
     testImplementation(libs.kotlin.test)
     testImplementation(libs.junit.aggregator)
     testRuntimeOnly(libs.junit.engine)
@@ -86,18 +89,7 @@ tasks.javadoc {
 }
 
 tasks.named<JavaExec>("run") {
-    jvmArgs("--enable-native-access=javafx.graphics")
-}
-
-tasks.withType<JavaCompile>() {
-    options.compilerArgumentProviders.add(
-        CommandLineArgumentProvider {
-            listOf(
-                "--patch-module",
-                "edu.cnm.deepdive.skywatch.javafx=${sourceSets["main"].output.asPath}"
-            )
-        }
-    )
+    jvmArgs("--enable-native-access=javafx.graphics,ALL-UNNAMED")
 }
 
 fun subprojectProperty(name: String): Provider<String> =
