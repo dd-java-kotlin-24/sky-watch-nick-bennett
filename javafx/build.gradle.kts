@@ -89,6 +89,17 @@ tasks.named<JavaExec>("run") {
     jvmArgs("--enable-native-access=javafx.graphics")
 }
 
+tasks.withType<JavaCompile>() {
+    options.compilerArgumentProviders.add(
+        CommandLineArgumentProvider {
+            listOf(
+                "--patch-module",
+                "edu.cnm.deepdive.skywatch.javafx=${sourceSets["main"].output.asPath}"
+            )
+        }
+    )
+}
+
 fun subprojectProperty(name: String): Provider<String> =
     subprojectProperties.map { properties ->
         properties.getProperty(name)

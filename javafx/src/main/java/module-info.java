@@ -10,7 +10,7 @@ module edu.cnm.deepdive.skywatch.javafx {
 
   requires edu.cnm.deepdive.skywatch.core;
 
-  exports edu.cnm.deepdive.skywatch.javafx to javafx.graphics;
+  exports edu.cnm.deepdive.skywatch.javafx;
 
   opens edu.cnm.deepdive.skywatch.javafx to javafx.fxml;
   opens edu.cnm.deepdive.skywatch.javafx.controller to javafx.fxml;
