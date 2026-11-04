@@ -14,3 +14,9 @@
 #searchResults .list-cell {
   -fx-pref-width: 0;
 }
+
+#searchResults #description {
+  -fx-wrap-text: true;
+  -fx-max-height: 120px;
+  -fx-text-overrun: word-ellipsis;
+}
