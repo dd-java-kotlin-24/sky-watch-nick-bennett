@@ -56,6 +56,9 @@ dependencies {
 
     implementation(project(":core"))
 
+    implementation(libs.openjfx.controls)
+    implementation(libs.openjfx.fxml)
+
     implementation(libs.jspecify)
     implementation(libs.jakarta.inject)
     ksp(libs.dagger.compiler)
@@ -86,18 +89,7 @@ tasks.javadoc {
 }
 
 tasks.named<JavaExec>("run") {
-    jvmArgs("--enable-native-access=javafx.graphics")
-}
-
-tasks.withType<JavaCompile>() {
-    options.compilerArgumentProviders.add(
-        CommandLineArgumentProvider {
-            listOf(
-                "--patch-module",
-                "edu.cnm.deepdive.skywatch.javafx=${sourceSets["main"].output.asPath}"
-            )
-        }
-    )
+    jvmArgs("--enable-native-access=javafx.graphics,ALL-UNNAMED")
 }
 
 fun subprojectProperty(name: String): Provider<String> =

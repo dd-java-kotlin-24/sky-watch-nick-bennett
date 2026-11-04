@@ -1,10 +1,14 @@
 package edu.cnm.deepdive.skywatch.javafx.adapter
 
 import edu.cnm.deepdive.skywatch.core.model.SearchResultImage
+import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
+import javafx.scene.control.Label
 import javafx.scene.control.ListCell
 import javafx.scene.control.ListView
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
 import javafx.util.Callback
 
 class SearchResultImageAdapter :
@@ -17,8 +21,10 @@ class SearchResultImageAdapter :
 
         private val root: Parent
 
-        // TODO: Declare properties matching name & type of widgets in search-result.fxml. Each must
-        //       have the @FXML annotation, and each must include the lateinit modifier.
+        @FXML
+        private lateinit var description: Label
+        @FXML
+        private lateinit var thumbnail: ImageView
 
         constructor() : super() {
             val loader = FXMLLoader(javaClass.classLoader.getResource("search-result.fxml"))
@@ -33,7 +39,8 @@ class SearchResultImageAdapter :
             if (empty || item == null) {
                 graphic = null
             } else {
-                // TODO: Copy values from item to the contents of our widgets.
+                description.text = item.description
+                thumbnail.image = Image(item.thumbnail.toString())
                 graphic = root
             }
         }
