@@ -10,3 +10,7 @@
   -fx-alignment: baseline-center;
   -fx-padding: 10px;
 }
+
+#searchResults .list-cell {
+  -fx-pref-width: 0;
+}
