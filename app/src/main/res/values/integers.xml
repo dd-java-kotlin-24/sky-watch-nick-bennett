@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <integer name="search_filter_weight">5</integer>
+  <integer name="description_weight">8</integer>
+  <integer name="thumbnail_weight">4</integer>
+</resources>

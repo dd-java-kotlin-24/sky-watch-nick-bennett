@@ -13,9 +13,35 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:padding="@dimen/half_dynamic_spacing"
     app:layout_constraintTop_toTopOf="parent">
 
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/search_filter_layout"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="@integer/search_filter_weight"
+      android:layout_margin="@dimen/half_dynamic_spacing"
+      app:hintEnabled="true"
+      app:hintAnimationEnabled="true">
+
+      <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/search_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/search_filter_hint"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 <!--    TODO Add control widgets.-->
+
+    <Button
+      android:id="@+id/submit"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/half_dynamic_spacing"
+      android:text="@string/submit_title"/>
 
   </LinearLayout>
 
@@ -26,6 +52,7 @@
     android:orientation="vertical"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     app:layout_constraintTop_toBottomOf="@id/search_controls"
-    app:layout_constraintBottom_toBottomOf="parent"/>
+    app:layout_constraintBottom_toBottomOf="parent"
+    tools:listitem="@layout/item_search_result"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

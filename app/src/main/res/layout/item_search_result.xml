@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:orientation="horizontal"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:gravity="center_vertical"
+  android:padding="@dimen/half_dynamic_spacing">
+
+  <TextView
+    android:id="@+id/description"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/half_static_spacing"
+    android:layout_weight="@integer/description_weight"
+    tools:text="A really cool photo from NASA"/>
+
+  <!--TODO Set contentDescription from code.-->
+
+  <ImageView
+    android:id="@+id/thumbnail"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/half_static_spacing"
+    android:layout_weight="@integer/thumbnail_weight"
+    android:scaleType="centerInside"
+    android:adjustViewBounds="true"
+    tools:src="@android:drawable/ic_menu_gallery"
+    tools:ignore="ContentDescription"/>
+
+</LinearLayout>
