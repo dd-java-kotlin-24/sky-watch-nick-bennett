@@ -152,6 +152,8 @@ dependencies {
     implementation(libs.hilt.android.core)
     implementation(libs.dagger.core)
     ksp(libs.hilt.compiler)
+    implementation(libs.jakarta.inject)
+    implementation(libs.jspecify)
 
     // Gson (Google JSON parser) library
     // implementation(libs.gson)
