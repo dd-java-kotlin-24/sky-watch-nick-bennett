@@ -128,6 +128,10 @@ dependencies {
     implementation(libs.constraint.layout)
     implementation(libs.recycler.view)
 
+    // Coil libraries
+    implementation(libs.coil.core)
+    implementation(libs.coil.okhttp)
+
     // Navigation framework libraries
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)

@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.qualifiers.ActivityContext
 import edu.cnm.deepdive.skywatch.app.databinding.ItemSearchResultBinding
 import edu.cnm.deepdive.skywatch.core.model.SearchResultImage
-import edu.cnm.deepdive.skywatch.core.model.dto.nasa.SearchResult
 import jakarta.inject.Inject
 
 class SearchResultsAdapter @Inject constructor(@ActivityContext context: Context) :
