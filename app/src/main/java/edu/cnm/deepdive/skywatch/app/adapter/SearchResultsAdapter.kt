@@ -1,9 +1,11 @@
 package edu.cnm.deepdive.skywatch.app.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil3.load
 import dagger.hilt.android.qualifiers.ActivityContext
 import edu.cnm.deepdive.skywatch.app.databinding.ItemSearchResultBinding
 import edu.cnm.deepdive.skywatch.core.model.SearchResultImage
@@ -32,19 +34,24 @@ class SearchResultsAdapter @Inject constructor(@ActivityContext context: Context
         return items.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun clear() {
         items.clear()
+        notifyDataSetChanged()
     }
 
     fun addAll(newItems: List<SearchResultImage>) {
+        val oldSize = items.size
         items.addAll(newItems)
+        notifyItemRangeInserted(oldSize, newItems.size)
     }
 
     private class SearchItemHolder(private val binding: ItemSearchResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(position: Int, item: SearchResultImage) {
-            TODO("Assign values from properties of item to widgets in binding.")
+            binding.description.text = item.description
+            binding.thumbnail.load(item.thumbnail)
         }
 
     }
