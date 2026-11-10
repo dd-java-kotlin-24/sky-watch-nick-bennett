@@ -17,7 +17,7 @@ import jakarta.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    private lateinit var adapter: SearchResultsAdapter
+    internal lateinit var adapter: SearchResultsAdapter
 
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupLayout()
+        setupViewModel()
+        setupListeners()
     }
 
     private fun setupLayout() {
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
+        binding.searchResults.adapter = adapter
         binding
             .submit
             .setOnClickListener {

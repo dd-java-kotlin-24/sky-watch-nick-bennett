@@ -16,6 +16,12 @@
 package edu.cnm.deepdive.skywatch.app;
 
 import android.app.Application;
+import android.content.Context;
+import androidx.annotation.NonNull;
+import coil3.ImageLoader;
+import coil3.SingletonImageLoader;
+import coil3.util.CoilUtils;
+import coil3.util.DebugLogger;
 import dagger.hilt.android.HiltAndroidApp;
 
 /**
@@ -29,6 +35,7 @@ public class SkyWatchApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
+
   }
 
 }

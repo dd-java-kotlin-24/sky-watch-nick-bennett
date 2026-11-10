@@ -51,7 +51,7 @@ class SearchResultsAdapter @Inject constructor(@ActivityContext context: Context
 
         fun bind(position: Int, item: SearchResultImage) {
             binding.description.text = item.description
-            binding.thumbnail.load(item.thumbnail)
+            binding.thumbnail.load(item.thumbnail.toString())
         }
 
     }
