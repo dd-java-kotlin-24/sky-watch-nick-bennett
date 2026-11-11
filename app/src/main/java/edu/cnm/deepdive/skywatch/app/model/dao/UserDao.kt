@@ -1,11 +1,7 @@
 package edu.cnm.deepdive.skywatch.app.model.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import edu.cnm.deepdive.skywatch.app.model.entity.User
 
 @Dao
@@ -23,6 +19,9 @@ interface UserDao {
     @Query(USER_ID_QUERY)
     fun select(id: Long): LiveData<User>
 
+    @Query(OAUTH_KEY_QUERY)
+    suspend fun select(oauthKey: String): User?
+
 }
 
 private const val USER_ID_QUERY = """
@@ -32,4 +31,13 @@ private const val USER_ID_QUERY = """
         user
     WHERE
         user_id = :id
+"""
+
+private const val OAUTH_KEY_QUERY = """
+    SELECT 
+        * 
+    FROM 
+        user
+    WHERE
+        oauth_key = :oauthKey
 """
