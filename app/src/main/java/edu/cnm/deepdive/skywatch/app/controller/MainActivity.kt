@@ -7,7 +7,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
-import edu.cnm.deepdive.skywatch.app.R
 import edu.cnm.deepdive.skywatch.app.adapter.SearchResultsAdapter
 import edu.cnm.deepdive.skywatch.app.databinding.ActivityMainBinding
 import edu.cnm.deepdive.skywatch.app.viewmodel.SearchViewModel
