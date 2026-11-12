@@ -31,7 +31,9 @@ data class Favorite(
     @ColumnInfo(name = "external_key")
     val externalKey: String,
 
+    @ColumnInfo(collate = ColumnInfo.NOCASE)
     val description: String,
+
     val thumbnail: URL,
     val image: URL,
     val favorited: Instant,

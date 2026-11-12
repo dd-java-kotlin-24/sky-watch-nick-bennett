@@ -6,7 +6,7 @@ import java.time.OffsetDateTime
 
 @JsonClass(generateAdapter = true)
 data class ItemData(
-    val nasaId: String,
+    @Json(name = "nasa_id") val nasaId: String,
     val center: String,
     @Json(name = "date_created") val dateCreated: OffsetDateTime,
     val description: String,

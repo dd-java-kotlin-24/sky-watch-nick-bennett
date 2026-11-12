@@ -1,4 +1,4 @@
--- Generated 2026-11-11 15:14:44-0700 for database version 1
+-- Generated 2026-11-12 14:24:14-0700 for database version 1
 
 CREATE TABLE IF NOT EXISTS `user`
 (

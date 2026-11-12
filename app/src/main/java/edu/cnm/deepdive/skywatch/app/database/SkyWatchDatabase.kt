@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import edu.cnm.deepdive.skywatch.app.database.SkyWatchDatabase.Companion.DATABASE_VERSION
+import edu.cnm.deepdive.skywatch.app.model.dao.FavoriteDao
 import edu.cnm.deepdive.skywatch.app.model.dao.UserDao
 import edu.cnm.deepdive.skywatch.app.model.entity.Favorite
 import edu.cnm.deepdive.skywatch.app.model.entity.User
@@ -21,7 +22,7 @@ abstract class SkyWatchDatabase : RoomDatabase() {
 
     abstract fun getUserDao(): UserDao
 
-    // TODO: Add getter for FavoriteDao.
+    abstract fun getFavoriteDao(): FavoriteDao
 
     companion object {
 

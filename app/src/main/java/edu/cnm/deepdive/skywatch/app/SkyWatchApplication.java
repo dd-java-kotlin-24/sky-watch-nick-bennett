@@ -16,13 +16,9 @@
 package edu.cnm.deepdive.skywatch.app;
 
 import android.app.Application;
-import android.content.Context;
-import androidx.annotation.NonNull;
-import coil3.ImageLoader;
-import coil3.SingletonImageLoader;
-import coil3.util.CoilUtils;
-import coil3.util.DebugLogger;
 import dagger.hilt.android.HiltAndroidApp;
+import edu.cnm.deepdive.skywatch.app.model.dao.UserDao;
+import jakarta.inject.Inject;
 
 /**
  * Initializes (in the {@link #onCreate()} method) application-level resources that cannot be
@@ -32,10 +28,12 @@ import dagger.hilt.android.HiltAndroidApp;
 @HiltAndroidApp
 public class SkyWatchApplication extends Application {
 
+  @Inject
+  UserDao userDao;
+
   @Override
   public void onCreate() {
     super.onCreate();
-
   }
 
 }
