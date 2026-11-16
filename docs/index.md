@@ -9,6 +9,7 @@ order: 0
 ## Page contents
 {:.no_toc}
 
+{:.collapsible.collapsed}
 - ToC
 {:toc}
 
