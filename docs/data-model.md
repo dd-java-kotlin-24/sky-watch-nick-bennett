@@ -19,4 +19,4 @@ order: 10
 
 ## Data-definition language (DDL) for app database
 
-[//]: # (TODO Use include to display clickable SQL file.)
+{% include linked-file.md file="sql/ddl.sql" type="sqlite" %}
