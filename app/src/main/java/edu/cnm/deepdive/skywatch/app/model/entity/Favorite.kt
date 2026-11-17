@@ -19,7 +19,7 @@ import kotlin.time.Instant
         )
     ],
     indices = [
-        Index(value = ["external_key"], unique = true),
+        Index(value = ["user_id", "external_key"], unique = true),
         Index(value = ["user_id"])
     ]
 )
