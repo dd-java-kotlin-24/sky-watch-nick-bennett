@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "edf3bef8dc0f193c864d99a5e173ef49",
+    "identityHash": "4ba686dde4e9df42f261a577fe11055e",
     "entities": [
       {
         "tableName": "user",
@@ -67,7 +67,7 @@
       },
       {
         "tableName": "favorite",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`favorite_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `external_key` TEXT NOT NULL, `description` TEXT NOT NULL, `thumbnail` TEXT NOT NULL, `image` TEXT NOT NULL, `favorited` INTEGER NOT NULL, `user_id` INTEGER NOT NULL, FOREIGN KEY(`user_id`) REFERENCES `user`(`user_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`favorite_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `external_key` TEXT NOT NULL, `description` TEXT NOT NULL COLLATE NOCASE, `thumbnail` TEXT NOT NULL, `image` TEXT NOT NULL, `favorited` INTEGER NOT NULL, `user_id` INTEGER NOT NULL, FOREIGN KEY(`user_id`) REFERENCES `user`(`user_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -120,13 +120,14 @@
         },
         "indices": [
           {
-            "name": "index_favorite_external_key",
+            "name": "index_favorite_user_id_external_key",
             "unique": true,
             "columnNames": [
+              "user_id",
               "external_key"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_favorite_external_key` ON `${TABLE_NAME}` (`external_key`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_favorite_user_id_external_key` ON `${TABLE_NAME}` (`user_id`, `external_key`)"
           },
           {
             "name": "index_favorite_user_id",
@@ -155,7 +156,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'edf3bef8dc0f193c864d99a5e173ef49')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4ba686dde4e9df42f261a577fe11055e')"
     ]
   }
 }
