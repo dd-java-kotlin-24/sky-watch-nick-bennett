@@ -49,11 +49,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigation() {
         appBarConfig = AppBarConfiguration.Builder(
-            R.id.search_fragment
+            R.id.search_fragment,
+            R.id.settings_fragment
         ).build()
         val host = binding.navHostFragmentContainer.getFragment<NavHostFragment>()
         navController = host.navController
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig)
+        NavigationUI.setupWithNavController(binding.bottomNavigation, navController)
     }
 
 }

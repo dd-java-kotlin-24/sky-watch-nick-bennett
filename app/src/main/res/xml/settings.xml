@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <SeekBarPreference
+    android:key="@string/favorites_size_key"
+    android:title="@string/favorites_size_title"
+    android:summary="@string/favorites_size_summary"
+    app:min="@integer/favorites_size_min"
+    android:max="@integer/favorites_size_max"
+    android:defaultValue="@integer/favorites_size_default"
+    app:showSeekBarValue="true"
+    android:iconSpaceReserved="false"/>
+
+</androidx.preference.PreferenceScreen>

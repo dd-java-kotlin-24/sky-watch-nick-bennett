@@ -9,10 +9,14 @@
   <fragment
     android:id="@+id/search_fragment"
     android:name="edu.cnm.deepdive.skywatch.app.controller.SearchFragment"
+    android:label="@string/search_title"
     tools:layout="@layout/activity_main"/>
 
   <!--TODO Add fragment definition for favorites.-->
 
-  <!--TODO Add fragment definition for settings.-->
+  <fragment
+    android:id="@+id/settings_fragment"
+    android:name="edu.cnm.deepdive.skywatch.app.controller.SettingsFragment"
+    android:label="@string/settings_title"/>
 
 </navigation>
