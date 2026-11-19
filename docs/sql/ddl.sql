@@ -1,4 +1,4 @@
--- Generated 2026-11-12 14:24:14-0700 for database version 1
+-- Generated 2026-11-19 03:12:28-0700 for database version 1
 
 CREATE TABLE IF NOT EXISTS `user`
 (
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `favorite`
 (
     `favorite_id`  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     `external_key` TEXT                              NOT NULL,
-    `description`  TEXT                              NOT NULL,
+    `description`  TEXT                              NOT NULL COLLATE NOCASE,
     `thumbnail`    TEXT                              NOT NULL,
     `image`        TEXT                              NOT NULL,
     `favorited`    INTEGER                           NOT NULL,
@@ -25,6 +25,6 @@ CREATE TABLE IF NOT EXISTS `favorite`
     FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON UPDATE NO ACTION ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS `index_favorite_external_key` ON `favorite` (`external_key`);
+CREATE UNIQUE INDEX IF NOT EXISTS `index_favorite_user_id_external_key` ON `favorite` (`user_id`, `external_key`);
 
 CREATE INDEX IF NOT EXISTS `index_favorite_user_id` ON `favorite` (`user_id`);

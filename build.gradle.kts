@@ -20,6 +20,6 @@ plugins {
     alias(libs.plugins.navigation.safeargs).apply(false)
     alias(libs.plugins.kotlin.jvm).apply(false)
     alias(libs.plugins.dokka).apply(false)
-    alias(libs.plugins.schema.parser).apply(false)
+    alias(libs.plugins.schema.parser).version("2.0.0-beta1").apply(false)
     alias(libs.plugins.junit).apply(false)
 }

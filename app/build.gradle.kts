@@ -22,7 +22,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.navigation.safeargs)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.schema.parser)
+    alias(libs.plugins.schema.parser).version("2.0.0-beta1")
     alias(libs.plugins.junit)
 }
 
@@ -214,8 +214,8 @@ dependencies {
 }
 
 roomDdl {
-    source.set(project.file("$projectDir/schemas/edu.cnm.deepdive.skywatch.app.database.SkyWatchDatabase/1.json"))
-    destination.set(project.file("$projectDir/../docs/sql/ddl.sql"))
+    source = project.file("schemas/edu.cnm.deepdive.skywatch.app.database.SkyWatchDatabase/1.json")
+    destination = project.file("../docs/sql/ddl.sql")
 }
 
 fun subprojectProperty(name: String): Provider<String> =
