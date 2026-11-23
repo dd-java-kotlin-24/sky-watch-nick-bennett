@@ -3,6 +3,7 @@ package edu.cnm.deepdive.skywatch.app.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
@@ -16,6 +17,8 @@ class SearchResultsAdapter @Inject constructor(@ActivityContext context: Context
 
     private val items: MutableList<SearchResultImage> = mutableListOf()
     private val inflater: LayoutInflater = LayoutInflater.from(context)
+
+    lateinit var listener: (View,  Int, SearchResultImage) -> Unit
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -46,12 +49,13 @@ class SearchResultsAdapter @Inject constructor(@ActivityContext context: Context
         notifyItemRangeInserted(oldSize, newItems.size)
     }
 
-    private class SearchItemHolder(private val binding: ItemSearchResultBinding) :
+    private inner class SearchItemHolder(private val binding: ItemSearchResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(position: Int, item: SearchResultImage) {
             binding.description.text = item.description
             binding.thumbnail.load(item.thumbnail.toString())
+            binding.root.setOnClickListener { listener(it, position, item) }
         }
 
     }

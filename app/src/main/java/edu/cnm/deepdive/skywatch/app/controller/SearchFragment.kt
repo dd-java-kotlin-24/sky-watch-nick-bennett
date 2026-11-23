@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import edu.cnm.deepdive.skywatch.app.adapter.SearchResultsAdapter
 import edu.cnm.deepdive.skywatch.app.databinding.FragmentSearchBinding
@@ -54,7 +55,12 @@ class SearchFragment : Fragment() {
             .observe(viewLifecycleOwner) { results ->
                 adapter.clear()
                 adapter.addAll(results)
+                binding?.loading?.visibility = View.GONE
             }
+        adapter.listener = { v, pos, item ->
+            viewModel.setSelectedItem(item)
+            binding?.root?.findNavController()?.navigate(SearchFragmentDirections.openItem())
+        }
     }
 
     private fun setupListeners() {
@@ -67,6 +73,7 @@ class SearchFragment : Fragment() {
                         .toString()
                         .trim()
                     if (searchText.length >= 3) {
+                        loading.visibility = View.VISIBLE
                         viewModel.search(
                             searchText,
                             null,

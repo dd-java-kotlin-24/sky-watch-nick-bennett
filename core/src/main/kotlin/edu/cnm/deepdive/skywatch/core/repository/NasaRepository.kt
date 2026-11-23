@@ -160,7 +160,7 @@ private class UrlAdapter {
 
     @FromJson
     fun fromJson(value: String?): URL? =
-        value?.let { URI(it).toURL() }
+        value?.let { URI(it.replace(" ", "%20")).toURL() }
 
     @ToJson
     fun toJson(value: URL?): String? =
