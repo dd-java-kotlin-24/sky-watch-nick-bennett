@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
 import edu.cnm.deepdive.skywatch.core.api.NasaMediaApi
 import edu.cnm.deepdive.skywatch.core.model.SearchResultImage
+import edu.cnm.deepdive.skywatch.core.model.dto.nasa.Link
 import edu.cnm.deepdive.skywatch.core.model.dto.nasa.SearchItem
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -131,10 +132,16 @@ internal object NasaRepository : MediaRepository {
     private fun extractResult(item: SearchItem): SearchResultImage {
         val itemData = item.data[0]
         val links = item.links
-        val canonical = links.firstOrNull { it.role == CANONICAL_ROLE }
-            ?: links.maxBy { it.width ?: 0 }
-        val thumbnail = links.firstOrNull { it.role == THUMBNAIL_ROLE }
-            ?: links.minBy { it.width ?: Int.MAX_VALUE }
+        val canonical = links
+            .firstOrNull { it.role == CANONICAL_ROLE && it.isJpeg }
+            ?: links
+                .filter(Link::isJpeg)
+                .maxBy { it.width ?: 0 }
+        val thumbnail = links
+            .firstOrNull { it.role == THUMBNAIL_ROLE && it.isJpeg }
+            ?: links
+                .filter(Link::isJpeg)
+                .minBy { it.width ?: Int.MAX_VALUE }
         return SearchResultImage(
             itemData.description,
             itemData.keywords,
@@ -167,3 +174,8 @@ private class UrlAdapter {
         value?.toString()
 
 }
+
+val Link.isJpeg: Boolean
+    get() = url.toString().let {
+        it.endsWith("jpg", true) || it.endsWith("jpeg", true)
+    }

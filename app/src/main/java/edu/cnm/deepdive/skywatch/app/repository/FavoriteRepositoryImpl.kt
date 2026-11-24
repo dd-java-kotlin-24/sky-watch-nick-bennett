@@ -16,9 +16,9 @@ class FavoriteRepositoryImpl @Inject constructor(private val favoriteDao: Favori
     override suspend fun delete(favorite: Favorite): Int =
         favoriteDao.delete(favorite)
 
-    override fun selectOrderByDescription(userId: Long): LiveData<List<Favorite>> =
+    override fun selectOrderByDescription(userId: Long?): LiveData<List<Favorite>> =
         favoriteDao.selectOrderByDescription(userId)
 
-    override fun selectOrderByFavorited(userId: Long): LiveData<List<Favorite>> =
+    override fun selectOrderByFavorited(userId: Long?): LiveData<List<Favorite>> =
         favoriteDao.selectOrderByFavorited(userId)
 }

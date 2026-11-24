@@ -17,10 +17,10 @@ interface FavoriteDao {
     suspend fun delete(favorite: Favorite): Int
 
     @Query(ORDER_BY_DESCRIPTION)
-    fun selectOrderByDescription(userId: Long): LiveData<List<Favorite>>
+    fun selectOrderByDescription(userId: Long? = null): LiveData<List<Favorite>>
 
     @Query(ORDER_BY_FAVORITED)
-    fun selectOrderByFavorited(userId: Long): LiveData<List<Favorite>>
+    fun selectOrderByFavorited(userId: Long? = null): LiveData<List<Favorite>>
 }
 
 private const val ORDER_BY_DESCRIPTION = """
@@ -29,7 +29,8 @@ private const val ORDER_BY_DESCRIPTION = """
     FROM 
         favorite 
     WHERE 
-        user_id = :userId 
+        (:userId IS NOT NULL AND user_id = :userId)
+        OR (:userId IS NULL AND user_id IS NULL)
     ORDER BY 
         description ASC
 """
@@ -40,7 +41,8 @@ private const val ORDER_BY_FAVORITED = """
     FROM 
         favorite 
     WHERE 
-        user_id = :userId 
+        (:userId IS NOT NULL AND user_id = :userId)
+        OR (:userId IS NULL AND user_id IS NULL)
     ORDER BY 
         favorited DESC
 """
