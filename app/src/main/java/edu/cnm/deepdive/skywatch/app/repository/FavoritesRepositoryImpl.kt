@@ -7,8 +7,8 @@ import jakarta.inject.Inject
 import jakarta.inject.Singleton
 
 @Singleton
-class FavoriteRepositoryImpl @Inject constructor(private val favoriteDao: FavoriteDao) :
-    FavoriteRepository {
+class FavoritesRepositoryImpl @Inject constructor(private val favoriteDao: FavoriteDao) :
+    FavoritesRepository {
 
     override suspend fun insert(favorite: Favorite): Long =
         favoriteDao.insert(favorite)
