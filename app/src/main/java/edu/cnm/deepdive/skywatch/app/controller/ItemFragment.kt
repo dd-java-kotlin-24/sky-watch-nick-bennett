@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import coil3.load
+import coil3.request.ImageRequest
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import edu.cnm.deepdive.skywatch.app.R
 import edu.cnm.deepdive.skywatch.app.databinding.FragmentItemBinding
@@ -25,7 +28,6 @@ class ItemFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentItemBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,21 +40,33 @@ class ItemFragment : Fragment() {
             .observe(viewLifecycleOwner) { searchResult ->
                 Log.d(tag, searchResult.image.toString())
                 binding.loading.visibility = View.VISIBLE
-                binding.image.load(searchResult.image.toString()) {
-                    listener(
-                        onSuccess = { _, _ -> binding.loading.visibility = View.GONE },
-                        onError = { _, result ->
-                            // FIXME: Display Snackbar with the error.
-                            binding.loading.visibility = View.GONE
-                        },
-                        onCancel = { binding.loading.visibility = View.GONE }
-                    )
-                }
+                binding.image.contentDescription = searchResult.description
+                binding.image.tooltipText = searchResult.description
+                binding.image.load(searchResult.image.toString()) { handleOutcome() }
             }
     }
 
-    companion object {
-        private val tag = ItemFragment::class.java.simpleName
+    private fun ImageRequest.Builder.handleOutcome() {
+        listener(
+            onSuccess = { _, _ -> binding.loading.visibility = View.GONE },
+            onError = { _, result ->
+                Snackbar
+                    .make(binding.root, R.string.image_load_failure, Snackbar.LENGTH_LONG)
+                    .addCallback(object: Snackbar.Callback() {
+                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                            super.onDismissed(transientBottomBar, event)
+                            if (event != DISMISS_EVENT_ACTION) {
+                                binding.root.findNavController().navigateUp()
+                            }
+                        }
+                    })
+                    .show()
+                binding.loading.visibility = View.GONE
+            },
+            onCancel = {
+                binding.loading.visibility = View.GONE
+                binding.root.findNavController().navigateUp()
+            }
+        )
     }
-
 }

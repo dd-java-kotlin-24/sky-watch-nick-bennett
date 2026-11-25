@@ -26,20 +26,18 @@
     app:layout_constrainedHeight="true"
     tools:text="A really cool photo from NASA"/>
 
-  <!--TODO Set contentDescription from code.-->
-
   <ImageView
     android:id="@+id/thumbnail"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/half_static_spacing"
+    android:importantForAccessibility="no"
     android:scaleType="fitCenter"
     android:adjustViewBounds="true"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toEndOf="@id/description"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_weight="@integer/thumbnail_weight"
-    tools:src="@android:drawable/ic_menu_gallery"
-    tools:ignore="ContentDescription"/>
+    tools:src="@android:drawable/ic_menu_gallery"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

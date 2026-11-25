@@ -124,32 +124,37 @@ internal object NasaRepository : MediaRepository {
             response.body()!!
                 .collection
                 .items
-                .map(::extractResult)
+                .mapNotNull(::extractResult)
         }
     }
 
-    private fun extractResult(item: SearchItem): SearchResultImage {
+    private fun extractResult(item: SearchItem): SearchResultImage? {
         val itemData = item.data[0]
         val links = item.links
         val canonical = links
-            .firstOrNull { it.role == CANONICAL_ROLE && it.isJpeg }
+            .firstOrNull { it.role == CANONICAL_ROLE && it.isSupported }
             ?: links
-                .filter(Link::isJpeg)
-                .maxBy { it.width ?: 0 }
+                .asSequence()
+                .filter(Link::isSupported)
+                .maxByOrNull { it.width ?: 0 }
         val thumbnail = links
-            .firstOrNull { it.role == THUMBNAIL_ROLE && it.isJpeg }
+            .firstOrNull { it.role == THUMBNAIL_ROLE && it.isSupported }
             ?: links
-                .filter(Link::isJpeg)
-                .minBy { it.width ?: Int.MAX_VALUE }
-        return SearchResultImage(
-            itemData.nasaId,
-            itemData.description,
-            itemData.keywords,
-            canonical.url,
-            thumbnail.url
-        )
+                .asSequence()
+                .filter(Link::isSupported)
+                .minByOrNull { it.width ?: Int.MAX_VALUE }
+        return if (thumbnail != null && canonical != null) {
+            SearchResultImage(
+                itemData.nasaId,
+                itemData.description,
+                itemData.keywords,
+                canonical.url,
+                thumbnail.url
+            )
+        } else {
+            null
+        }
     }
-
 }
 
 private class OffsetDateTimeAdapter {
@@ -175,7 +180,9 @@ private class UrlAdapter {
 
 }
 
-val Link.isJpeg: Boolean
+private val supportedExtensions = Regex("\\.(?:jpg|jpeg|png|webp)$", setOf(RegexOption.IGNORE_CASE))
+
+private val Link.isSupported: Boolean
     get() = url.toString().let {
-        it.endsWith("jpg", true) || it.endsWith("jpeg", true)
+        supportedExtensions.containsMatchIn(it)
     }
