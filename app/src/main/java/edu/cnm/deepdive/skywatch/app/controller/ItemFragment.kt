@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.skywatch.app.controller
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,26 +37,23 @@ class ItemFragment : Fragment() {
         viewModel
             .selectedItem
             .observe(viewLifecycleOwner) { searchResult ->
-                Log.d(tag, searchResult.image.toString())
                 binding.loading.visibility = View.VISIBLE
                 binding.image.contentDescription = searchResult.description
                 binding.image.tooltipText = searchResult.description
-                binding.image.load(searchResult.image.toString()) { handleOutcome() }
+                binding.image.load(searchResult.image.toString()) { setHandlers() }
             }
     }
 
-    private fun ImageRequest.Builder.handleOutcome() {
+    private fun ImageRequest.Builder.setHandlers(): Unit {
         listener(
             onSuccess = { _, _ -> binding.loading.visibility = View.GONE },
-            onError = { _, result ->
+            onError = { _, _ ->
                 Snackbar
                     .make(binding.root, R.string.image_load_failure, Snackbar.LENGTH_LONG)
                     .addCallback(object: Snackbar.Callback() {
-                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                            super.onDismissed(transientBottomBar, event)
-                            if (event != DISMISS_EVENT_ACTION) {
-                                binding.root.findNavController().navigateUp()
-                            }
+                        override fun onDismissed(snackbar: Snackbar, event: Int) {
+                            super.onDismissed(snackbar, event)
+                            binding.root.findNavController().navigateUp()
                         }
                     })
                     .show()
