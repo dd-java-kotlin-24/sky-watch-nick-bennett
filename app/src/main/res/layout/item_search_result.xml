@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:orientation="horizontal"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
@@ -13,9 +14,16 @@
   <TextView
     android:id="@+id/description"
     android:layout_width="0dp"
-    android:layout_height="wrap_content"
+    android:layout_height="0dp"
     android:layout_margin="@dimen/half_static_spacing"
-    android:layout_weight="@integer/description_weight"
+    android:ellipsize="end"
+    android:gravity="center_vertical"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toStartOf="@id/thumbnail"
+    app:layout_constraintTop_toTopOf="@id/thumbnail"
+    app:layout_constraintBottom_toBottomOf="@id/thumbnail"
+    app:layout_constraintHorizontal_weight="@integer/description_weight"
+    app:layout_constrainedHeight="true"
     tools:text="A really cool photo from NASA"/>
 
   <!--TODO Set contentDescription from code.-->
@@ -25,10 +33,13 @@
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/half_static_spacing"
-    android:layout_weight="@integer/thumbnail_weight"
-    android:scaleType="centerInside"
+    android:scaleType="fitCenter"
     android:adjustViewBounds="true"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toEndOf="@id/description"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_weight="@integer/thumbnail_weight"
     tools:src="@android:drawable/ic_menu_gallery"
     tools:ignore="ContentDescription"/>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

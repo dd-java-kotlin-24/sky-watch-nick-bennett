@@ -5,12 +5,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import dagger.hilt.android.qualifiers.ActivityContext
 import edu.cnm.deepdive.skywatch.app.databinding.ItemSearchResultBinding
 import edu.cnm.deepdive.skywatch.core.model.SearchResultImage
 import jakarta.inject.Inject
+import kotlin.math.max
 
 class SearchResultsAdapter @Inject constructor(@ActivityContext context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -18,7 +21,7 @@ class SearchResultsAdapter @Inject constructor(@ActivityContext context: Context
     private val items: MutableList<SearchResultImage> = mutableListOf()
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-    lateinit var listener: (View,  Int, SearchResultImage) -> Unit
+    lateinit var listener: (View, Int, SearchResultImage) -> Unit
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -52,6 +55,13 @@ class SearchResultsAdapter @Inject constructor(@ActivityContext context: Context
     private inner class SearchItemHolder(private val binding: ItemSearchResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            binding.description.viewTreeObserver.addOnPreDrawListener {
+                binding.description.adjustMaxLines()
+                true
+            }
+        }
+
         fun bind(position: Int, item: SearchResultImage) {
             binding.description.text = item.description
             binding.thumbnail.load(item.thumbnail.toString())
@@ -60,4 +70,13 @@ class SearchResultsAdapter @Inject constructor(@ActivityContext context: Context
 
     }
 
+    private fun TextView.adjustMaxLines() {
+        val availableHeight = height - paddingTop - paddingBottom
+        if (availableHeight > 0 && lineHeight > 0) {
+            val displayLines = availableHeight / lineHeight
+            if (displayLines > 0 && maxLines != displayLines) {
+                maxLines = max(displayLines - 1, 1)
+            }
+        }
+    }
 }
