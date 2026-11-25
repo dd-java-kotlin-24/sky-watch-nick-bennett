@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4ba686dde4e9df42f261a577fe11055e",
+    "identityHash": "dfc7b9677403a5b49be2730cd483d4bd",
     "entities": [
       {
         "tableName": "user",
@@ -67,7 +67,7 @@
       },
       {
         "tableName": "favorite",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`favorite_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `external_key` TEXT NOT NULL, `description` TEXT NOT NULL COLLATE NOCASE, `thumbnail` TEXT NOT NULL, `image` TEXT NOT NULL, `favorited` INTEGER NOT NULL, `user_id` INTEGER NOT NULL, FOREIGN KEY(`user_id`) REFERENCES `user`(`user_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`favorite_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `external_key` TEXT NOT NULL, `description` TEXT NOT NULL COLLATE NOCASE, `thumbnail` TEXT NOT NULL, `image` TEXT NOT NULL, `favorited` INTEGER NOT NULL, `user_id` INTEGER, FOREIGN KEY(`user_id`) REFERENCES `user`(`user_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -108,8 +108,7 @@
           {
             "fieldPath": "userId",
             "columnName": "user_id",
-            "affinity": "INTEGER",
-            "notNull": true
+            "affinity": "INTEGER"
           }
         ],
         "primaryKey": {
@@ -156,7 +155,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4ba686dde4e9df42f261a577fe11055e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dfc7b9677403a5b49be2730cd483d4bd')"
     ]
   }
 }

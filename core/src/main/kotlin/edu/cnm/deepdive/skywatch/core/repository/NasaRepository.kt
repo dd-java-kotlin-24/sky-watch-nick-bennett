@@ -16,7 +16,6 @@ import java.net.URL
 import java.time.OffsetDateTime
 import java.util.*
 
-
 internal object NasaRepository : MediaRepository {
 
     private const val SERVICE_PROPERTIES = "nasa-media-search.properties"
@@ -143,6 +142,7 @@ internal object NasaRepository : MediaRepository {
                 .filter(Link::isJpeg)
                 .minBy { it.width ?: Int.MAX_VALUE }
         return SearchResultImage(
+            itemData.nasaId,
             itemData.description,
             itemData.keywords,
             canonical.url,

@@ -12,30 +12,29 @@ import jakarta.inject.Inject
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(private val service: FavoritesService) : ViewModel() {
 
-    private val _throwable: MutableLiveData<Throwable?> = MutableLiveData()
     val throwable: LiveData<Throwable?>
-        get() = _throwable
+        field: MutableLiveData<Throwable?> = MutableLiveData()
 
-    fun getFavoritesByDescription(): LiveData<List<Favorite>> =
-        service.selectOrderByDescription(null)
+    val favoritesByDescription: LiveData<List<Favorite>>
+        get() = service.selectOrderByDescription()
 
-    fun getFavoritesByFavorited(): LiveData<List<Favorite>> =
-        service.selectOrderByFavorited(null)
+    val favoritesByFavorited: LiveData<List<Favorite>>
+        get() = service.selectOrderByFavorited()
 
     fun insert(favorite: Favorite) {
         service.insert(favorite)
             .thenAccept {  }
-            .exceptionally { postThrowable(it) }
+            .exceptionally(::postThrowable)
     }
 
     fun delete(favorite: Favorite) {
         service.delete(favorite)
-            .exceptionally { postThrowable(it) }
+            .exceptionally(::postThrowable)
     }
 
     private fun postThrowable(throwable: Throwable): Void? {
         Log.e(tag, (throwable.message ?: ""), throwable)
-        _throwable.postValue(throwable)
+        this.throwable.postValue(throwable)
         return null
     }
 

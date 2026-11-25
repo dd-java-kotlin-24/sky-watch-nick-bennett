@@ -5,6 +5,7 @@ import java.net.URL
 
 @JsonClass(generateAdapter = true)
 data class SearchResultImage(
+    val externalKey: String,
     val description: String,
     val keywords: List<String>,
     val image: URL,
